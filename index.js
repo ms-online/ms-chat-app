@@ -16,4 +16,9 @@ app.use(express.static('public'));
 var io = socket(server);
 io.on('connection',(socket)=> {
     console.log('实现socket连接',socket.id)
+
+    // 获取从客户端发送的数据
+    socket.on('chat',(data) => {
+        io.sockets.emit('chat', data);
+    })
 })
