@@ -15,9 +15,20 @@ btn.addEventListener('click',()=> {
         message:message.value,
         handle:handle.value
     });
+    message.value ='';
+})
+
+message.addEventListener('keypress',()=>{
+    socket.emit('typing', handle.value);
 })
 
 // 获取从服务器传输的数据
 socket.on('chat',(data)=>{
+    feedback.innerHTML ='';
     output.innerHTML += `<p><strong>${data.handle}:${data.message}</strong></p>`
+})
+
+// 获取从服务器广播的数据
+socket.on('typing',(data)=> {
+    feedback.innerHTML = `<p><em>${data}正在输入...</em></p>`
 })
